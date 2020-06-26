@@ -64,6 +64,7 @@ export type GoogleAutoCompleteProps = {
   inputValue: S['inputValue'];
   locationResults: S['locationResults'];
   handleTextChange: (value: string) => void;
+  handleTextChangeDone: (value: string) => void;
   handleEventChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   fetchDetails: (placeId: string) => Promise<GoogleLocationDetailResult>;
   clearSearch: () => void;
@@ -170,6 +171,7 @@ export class GoogleAutoComplete extends React.PureComponent<P, S> {
       inputValue: this.state.inputValue,
       locationResults: this.state.locationResults,
       handleTextChange: this._handleTextChange,
+      handleTextChangeDone: this._handleTextChangeDone,
       handleEventChange: this._handleEventChange,
       fetchDetails: this._searchDetails,
       isSearching: this.state.isSearching,
@@ -208,6 +210,16 @@ export class GoogleAutoComplete extends React.PureComponent<P, S> {
     if (inputValue.length >= this.props.minLength!) {
       this._search(inputValue);
     }
+  };
+
+  private _handleTextChangeDone = (inputValue: string) => {
+    if (this.props.apiKey == null) {
+      throw new Error('Api Key is required');
+    }
+
+    this.setState({
+      inputValue,
+    });
   };
 
   /**
