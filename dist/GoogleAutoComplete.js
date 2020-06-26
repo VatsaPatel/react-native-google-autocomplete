@@ -243,6 +243,15 @@ var GoogleAutoComplete = /** @class */ (function (_super) {
                 _this._search(inputValue);
             }
         };
+
+        _this._handleTextChangeDone = function (inputValue) {
+            if (_this.props.apiKey == null) {
+                throw new Error('Api Key is required');
+            }
+            _this.setState({
+                inputValue: inputValue,
+            });
+        };
         /**
          * Handle the input change for react web
          */
@@ -289,6 +298,7 @@ var GoogleAutoComplete = /** @class */ (function (_super) {
             inputValue: this.state.inputValue,
             locationResults: this.state.locationResults,
             handleTextChange: this._handleTextChange,
+            handleTextChangeDone: this._handleTextChangeDone,
             handleEventChange: this._handleEventChange,
             fetchDetails: this._searchDetails,
             isSearching: this.state.isSearching,
